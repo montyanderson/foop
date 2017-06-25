@@ -47,6 +47,7 @@ class_t User = {
 ``` C
 int main() {
 	struct User *user = new(&User);
+	strcpy(user->name, "Monty");
 }
 ```
 
@@ -55,7 +56,6 @@ int main() {
 ``` C
 int main() {
 	struct User *user = new(&User);
-
 	strcpy(user->name, "Monty");
 
 	delete(user);
