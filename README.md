@@ -7,6 +7,7 @@ C Framework for Object-Orientated Programming
 
 ``` c
 #include <stdio.h>
+#include <string.h>
 #include "foop.h"
 ```
 
