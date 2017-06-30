@@ -29,7 +29,7 @@ delete(user);
 
 ## Documentation
 
-### struct class_t
+### class_t
 
 Structure for a class definition.
 
