@@ -35,8 +35,8 @@ Structure for a class definition.
 
 #### Members
 
-* **void (*constructor)()** - pointer to a function that constructs the object pointed to at *\_this*. Can be NULL.
-* **void (*destructor)()** - pointer to a function that destructs the object pointed to at *\_this*. Can be NULL.
+* **void (\*constructor)()** - pointer to a function that constructs the object pointed to at *\_this*. Can be NULL.
+* **void (\*destructor)()** - pointer to a function that destructs the object pointed to at *\_this*. Can be NULL.
 * **size_t size** - size of the object (instance) structure in bytes.
 
 ### void \*new(const class_t \*class)
