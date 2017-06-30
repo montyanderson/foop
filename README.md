@@ -1,134 +1,75 @@
 # foop
 C Framework for Object-Orientated Programming
 
-## How do I *foop*?
-
-* Include the *foop* library
-
-``` c
-#include <stdio.h>
-#include <string.h>
-#include "foop.h"
-```
-
-* Make a class
+* Normal C Code
 
 ``` C
-struct User {
-	char name[20];
-	int age;
-};
+struct User user;
 
-void UserConstructor(void *object) {
-	struct User *user = object;
+user_init(&user);
 
-	// set a default name and age
-	strcpy(user->name, "John");
-	user->age = 23;
+user_setName(&user, "John");
+user_setAge(&user, 37);
+user_print(&user, 37);
 
-	printf("Created a user!\n");
-}
-
-void UserDestructor(void *object) {
-	struct User *user = object;
-
-	printf("Deleting user '%s'\n", user->name);
-}
-
-class_t User = {
-	&UserConstructor,
-	&UserDestructor,
-	sizeof(struct User)
-};
+user_free(&user);
 ```
 
-* Make an instance of your class (an object)
+* With *foop*
 
 ``` C
-int main() {
-	struct User *user = new(&User);
-	strcpy(user->name, "Monty");
-}
+struct User *user = new(User);
+
+$(user)->setName("John");
+$(user)->setAge(37);
+$(user)->print();
+
+delete(user);
 ```
 
-* Delete it
+## Documentation
 
-``` C
-int main() {
-	struct User *user = new(&User);
-	strcpy(user->name, "Monty");
+### struct class_t
 
-	delete(user);
-}
-```
+Structure for a class definition.
 
-* You're done!
+#### Members
 
-```
-$ ./test
-Created a user.
-Deleting user 'Monty'.
-```
+* **void (*constructor)()** - pointer to a function that constructs the object pointed to at *\_this*. Can be NULL.
+* **void (*destructor)()** - pointer to a function that destructs the object pointed to at *\_this*. Can be NULL.
+* **size_t size** - size of the object (instance) structure in bytes.
 
-## Type-specific routing in functions
+### void \*new(const class_t \*class)
 
-``` C
-#include <stdio.h>
-#include <string.h>
-#include "foop.h"
+Returns a pointer to the new object (instance) of the passed class.
 
-// make two classes, Guitarist and Bassist
+* Allocates memory for the object structure + reference to original class
+* Call the class *constructor*
+* Returns the object
 
-struct Guitarist {
-	char name[20];
-	char guitar[20];
-};
+### void delete(void \*object)
 
-struct Bassist {
-	char name[25];
-	char bass[25];
-};
+Deletes the passed object pointer.
 
-const class_t Guitarist = {
-	NULL,
-	NULL,
-	sizeof(struct Guitarist)
-};
+* Calls the class destructor
+* Frees memory allocated to object structure + reference to class
 
-const class_t Bassist = {
-	NULL,
-	NULL,
-	sizeof(struct Bassist)
-};
+### const class_t \*instanceOf(void \*object)
 
-// playInstrument can take either object
+Returns a pointer to the original class used to create the object (instance).
 
-void playInstrument(void *player) {
-	// behaviour can change based on class using instanceOf()
+### void foop_reconstruct(void \*object)
 
-	if(instanceOf(&Guitarist, player)) {
-		struct Guitarist *guitarist = player;
+Destructs the object and creates a new one in it's place.
 
-		printf("%s plays their %s guitar!\n", guitarist->name, guitarist->guitar);
-	} else if(instanceOf(&Bassist, player)) {
-		struct Bassist *bassist = player;
+* Calls the class destructor
+* Zeros out associated memory
+* Calls the class constructor
 
-		printf("%s plays their %s bass!\n", bassist->name, bassist->bass);
-	}
-}
+### void \*\_this
 
-int main() {
-	struct Guitarist *jane = new(&Guitarist);
+Pointer to the object about to be acted upon.
 
-	strcpy(jane->name, "Jane");
-	strcpy(jane->guitar, "Les Paul");
+### $(void \*object)
 
-	struct Bassist *sam = new(&Bassist);
-
-	strcpy(sam->name, "Sam");
-	strcpy(sam->bass, "Mustang");
-
-	playInstrument(jane);
-	playInstrument(sam);
-}
-```
+Sets *\_this* to the object and returns the object casted to the type it was passed as.

@@ -14,14 +14,18 @@ extern void *_this;
 
 void *foop_new(const class_t *class);
 void foop_delete(void *object);
-bool foop_instanceOf(const class_t *class, void *object);
+const class_t *foop_instanceOf(void *object);
 
 #define foop_$(object) ((typeof((object))) (_this = (object)))
+
+#ifndef FOOP_NOCONFLICT
 
 #define new foop_new
 #define delete foop_delete
 #define instanceOf foop_instanceOf
 #define reconstruct foop_reconstruct
 #define $ foop_$
+
+#endif
 
 #endif

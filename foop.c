@@ -33,11 +33,11 @@ void foop_delete(void *object) {
 	free(mem);
 }
 
-bool foop_instanceOf(const class_t *class, void *object) {
-	class_t *objectClass;
-	memcpy(&objectClass, ((char *) object) - sizeof(void *), sizeof(void *));
+const class_t *foop_instanceOf(void *object) {
+	class_t *class;
+	memcpy(&class, ((char *) object) - sizeof(void *), sizeof(void *));
 
-	return objectClass == class;
+	return class;
 }
 
 void foop_reconstruct(void *object) {
@@ -49,6 +49,8 @@ void foop_reconstruct(void *object) {
 	if(class->destructor) {
 		class->destructor();
 	}
+
+	memset(object, 0, class->size);
 
 	if(class->constructor) {
 		class->constructor();
