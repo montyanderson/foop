@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>foop</title>
+
+		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+		<link href="style.css" rel="stylesheet">
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+
+	</head>
+	<body>
+
+		<nav>
+			<div class="container">
+				<h3>foop</h3>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="left">
+				<pre>
+					<code class="cpp">
+struct User {
+	int age;
+	void (*birthday)();
+}
+
+void UserBirthday() {
+	User *this = _this;
+
+	user->age++;
+}
+
+void UserConstructor() {
+	User *this = _this;
+
+	user->age = 20;
+	usser->birthday = &UserBirthday;
+}
+
+const class_t _User {
+	&UserConstructor,
+	NULL, // no destructor needed
+	sizeof(struct User)
+}
+
+const class_t *User = &_User;
+
+int main() {
+	struct User *user = new(User);
+
+	user->age; // 20
+	$(user)->birthday();
+	user->age; // 21
+}
+					</code>
+				</pre>
+			</div>
+
+			<div class="right">
+				<div class="center">
+					<h1>foop</h1>
+					<h3>C Framework for OO Programming</h3>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
