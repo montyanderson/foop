@@ -27,6 +27,12 @@ $(user)->print();
 delete(user);
 ```
 
+## Features
+
+* Almost non-existent CPU overhead; requires a single extra pointer for a method call.
+* Requires only slightly more memory, used for storing reference to the class in an instance and pointers to function methods.
+* Very small codebase with large compatibility.
+
 ## Documentation
 
 ### class_t
