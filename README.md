@@ -29,6 +29,7 @@ delete(user);
 
 ## Features
 
+* Standardised utility libraries such as [foop-string](https://github.com/montyanderson/foop-string).
 * Almost non-existent CPU overhead; requires a single extra pointer for a method call.
 * Requires only slightly more memory, used for storing reference to the class in an instance and pointers to function methods.
 * Very small codebase with large compatibility.
